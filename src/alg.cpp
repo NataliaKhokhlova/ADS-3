@@ -1,93 +1,101 @@
 // Copyright 2021 NNTU-CS
 #include <string>
 #include "tstack.h"
-
-std::string infx2pstfx(std::string inf) {
-  return std::string("");
-  int priority(char a) {
-    if (a == '(')
+int prioritet (char value) {
+  switch (value) {
+      case '(':
       return 0;
-    if (a == ')')
+      break;
+      case ')':
       return 1;
-    if ((a == '+') || (a == '-'))
+      break;
+      case '+':
       return 2;
-    if ((a == '*') || (a == '/'))
+      break;
+      case '-':
+      return 2;
+      break;
+      case '*':
       return 3;
-  }
-}
-
-int eval(std::string pst) {
-  return 0;
-  int calculator(char ptr_a, int x, int y) {
-    if (ptr_a == '+')
-      return x + y;
-    if (ptr_a == '-')
-      return x - y;
-    if (ptr_a == '*')
-      return x * y;
-    if (ptr_a == '/')
-      return x / y;
-  }
-  std::string infx2pstfx(std::string inf) {
-    char head = 0;
-    TStack <char> stack1;
-    std::string str;
-    for (int i = 0; i < inf.length(); i++) {
-      int prioritize = priority(inf[i]);
-      if (prioritize > -1) || prioritize > priority(head) ||
-        stack1.isEmpty()) && inf[i] != ')') {
-        if (stack1.isEmpty())
-          head = inf[i];
-        stack1.push(inf[i]);
+      break;
+      case '/':
+      return 3;
+      break;
+      default:
+      return -1;
       }
-      else if (inf[i] == ')') {
-        str.push_back(stack1.get());
-        str.push_back(' ');
-        stack1.pop();
+  }
+std::string infx2pstfx(std::string inf) {
+ std::string pfx;
+  int i = 0;
+  char chv = inf[i];
+  char arr = 0;
+  TStack <char> stackChar;
+  while (chv) {
+    int priority;
+    priority = prior(ch);
+    if (priority > -1) {
+      if ((priority == 0 || priority > prior(arr) ||
+           stackChar.isEmpty()) && chv != ')') {
+        if (stackChar.isEmpty())
+          arr = chv;
+        stackChar.push(chv);
         }
-      stack1.pop();
-      if (stack1.isEmpty())
-        head = 0;
+      else if (chv == ')') {
+        while (stackChar.get() != '(') {
+          pfx.push_back(stackChar.get());
+          pfx.push_back(' ');
+          stackChar.pop();
+          }
+        stackChar.pop();
+        if (stackChar.isEmpty())
+          arr = 0;
+        }
       else {
-        while (!stack1.isEmpty() && priority(stack1.get()) >= prioritize) {
-          str.push_back(stack1.get());
-          str.push_back(' ');
-          stack1.pop();
-        }
-        if (stack1.isEmpty())
-          head = inf[i];
-        stack1.push(inf[i]);
-      }
-    }
-    else {
-      str.push_back(inf[i]);
-      str.push_back(' ');
-    }
+        while (!stackChar.isEmpty() &&
+               prior(stackChar.get()) >= priority) {
+          pfx.push_back(stackChar.get());
+          pfx.push_back(' ');
+          stackChar.pop();
   }
-  while (!stack1.isEmpty()) {
-    str.push_back(stack1.get());
-    str.push_back(' ');
-    stack1.pop();
-    }
-  str.erase(str.end() - 1, str.end());
-  return str;
-}
-int eval(std::string pst) {
-  TStack <int> stack2;
-  int result;
-  for (int i = 0; i < pst.size(); i++) {
-    char ch = pst[i];
-    int prioritize = priority(ch);
-    if (prioritize == -1)
-      stack2.push(ch - 48);
+        if (stackChar.isEmpty())
+          arr = chv;
+        stackChar.push(chv);
+        }
+      }
     else {
-      int num1 = stack2.get();
-      stack2.pop();
-      int num2 = stack2.get();
-      stack2.pop();
-      result = calculator(ch, num2, num1);
-      stack2.push(res);
+      pfx.push_back(chv);
+      pfx.push_back(' ');
+}
+    chv = inf[++i];
+    }
+  while (!stackChar.isEmpty()) {
+    pfx.push_back(stackChar.get());
+    pfx.push_back(' ');
+    stackChar.pop();
+    }
+  pfx.erase(pfx.end() - 1, pfx.end());
+  return pfx;
+  }
+int eval(std::string pst) {
+ std::string tstr;
+TStack<int> stack2;
+for (int i = 0; i < pst.length(); i++) {
+  if (pst[i] >= '0' && pst[i] <= '9') {
+    tstr = pst[i];
+    stack2.push(pst[i] - '0');
+    }
+  else if (pst[i] != ' ') {
+    int second = stack2.get();
+    stack2.pop();
+    int first = stack2.get();
+    stack2.pop();
+    if (pst[i] == '*') stack2.push(first * second);
+    else if (pst[i] == '/') stack2.push(first / second);
+    else if (pst[i] == '+') stack2.push(first + second);
+    else {
+      stack2.push(first - second);
       }
     }
   return stack2.get();
-}
+  }
