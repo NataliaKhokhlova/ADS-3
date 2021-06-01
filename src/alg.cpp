@@ -33,7 +33,7 @@ std::string infx2pstfx(std::string inf) {
   TStack <char> stackChar;
   while (chv) {
     int priority;
-    priority = prior(ch);
+    priority = prior(chv);
     if (priority > -1) {
       if ((priority == 0 || priority > prior(arr) ||
            stackChar.isEmpty()) && chv != ')') {
