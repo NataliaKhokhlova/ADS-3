@@ -1,4 +1,5 @@
 // Copyright 2021 NNTU-CS
+Copyright [year] <Copyright Owner>
 #include <string>
 #include "tstack.h"
 int prior(char ch) {
@@ -19,7 +20,6 @@ int prior(char ch) {
         return -1;
     }
 }
-
 std::string infx2pstfx(std::string inf) {
   std::string pfx;
     int i = 0;
@@ -63,7 +63,7 @@ std::string infx2pstfx(std::string inf) {
 
         ch = inf[++i];
     }
-   while (!stackChar.isEmpty()) {
+    while (!stackChar.isEmpty()) {
         pfx.push_back(stackChar.get());
         pfx.push_back(' ');
         stackChar.pop();
