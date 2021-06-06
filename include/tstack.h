@@ -1,7 +1,6 @@
 // Copyright 2021 NNTU-CS
 #ifndef INCLUDE_TSTACK_H_
 #define INCLUDE_TSTACK_H_
-filter=-whitespace,-legal/copyright
 
 const int size = 100;
 
